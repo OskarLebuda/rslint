@@ -79,7 +79,7 @@ func TestExtractPreservesOffsets(t *testing.T) {
 
 			// Every byte outside a script block is a space or a line
 			// terminator, so no template or style text can reach the parser.
-			for index := 0; index < len(result.Text); index++ {
+			for index := range len(result.Text) {
 				if inAnyScript(result, index) {
 					continue
 				}

@@ -363,7 +363,7 @@ func findEndTag(text string, tag string, contentStart int) (int, int) {
 // everywhere else with line terminators kept in place.
 func project(text string, blocks []Block) string {
 	projected := make([]byte, len(text))
-	for index := 0; index < len(text); index++ {
+	for index := range len(text) {
 		if character := text[index]; character == '\n' || character == '\r' {
 			projected[index] = character
 			continue
@@ -500,7 +500,7 @@ func skipSpace(text string, index int) int {
 // alone, which is the fold HTML specifies for a tag or attribute name.
 func foldASCII(value string) string {
 	needsFold := false
-	for index := 0; index < len(value); index++ {
+	for index := range len(value) {
 		if value[index] >= 'A' && value[index] <= 'Z' {
 			needsFold = true
 			break
