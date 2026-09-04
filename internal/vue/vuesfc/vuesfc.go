@@ -522,3 +522,18 @@ func isIn(set map[string]struct{}, key string) bool {
 	_, ok := set[key]
 	return ok
 }
+
+// Extension is the file extension of a Vue Single File Component.
+const Extension = ".vue"
+
+// IsFile reports whether path names a Vue Single File Component.
+//
+// The extension is matched by folding ASCII, because the filesystems rslint
+// runs on disagree about whether a name's case is part of its identity, and a
+// component saved as `App.VUE` is the same kind of file either way.
+func IsFile(path string) bool {
+	if len(path) <= len(Extension) {
+		return false
+	}
+	return foldASCII(path[len(path)-len(Extension):]) == Extension
+}
