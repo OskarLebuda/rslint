@@ -40,8 +40,10 @@ func TestExtractPreservesOffsets(t *testing.T) {
 			source: "<template><b/></template>\n<script>const a = 1;</script>\n<style scoped>.a { color: red }</style>\n<i18n>{ \"en\": {} }</i18n>\n",
 		},
 		{
+			// Multi-byte bytes outside a script block become as many spaces,
+			// which is what keeps every offset after them exact.
 			name:   "multibyte template text",
-			source: "<template>\n  <p>zażółć gęślą jaźń — ĄĆĘŁŃÓŚŹŻ</p>\n</template>\n<script>const a = 1;</script>\n",
+			source: "<template>\n  <p>— ✓ ☂ 🎉 日本語</p>\n</template>\n<script>const a = 1;</script>\n",
 		},
 		{
 			name:   "crlf line endings",
