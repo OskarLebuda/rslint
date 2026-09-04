@@ -25,6 +25,10 @@ type Component struct {
 	fs   vfs.FS
 	path string
 	once sync.Once
+	// text is the component's own text, markup and all. It is deliberately
+	// not vuesfc.Result.Text, which is the blanked projection the parser
+	// reads: a template rule asking for the component would get spaces.
+	text string
 	sfc  vuesfc.Result
 	ok   bool
 }
@@ -47,6 +51,7 @@ func (c *Component) load() {
 		if !ok {
 			return
 		}
+		c.text = text
 		c.sfc = vuesfc.Extract(text)
 		c.ok = true
 	})
@@ -68,7 +73,7 @@ func (c *Component) Text() string {
 	if c == nil || !c.ok {
 		return ""
 	}
-	return c.sfc.Text
+	return c.text
 }
 
 // Blocks returns every top-level block of the component in source order.
